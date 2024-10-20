@@ -1,0 +1,27 @@
+
+
+
+
+<h1>
+    {{ q.question_text }}
+</h1>
+
+{% if q.choice_set.all %}
+<ul>
+    {% for choice in q.choice_set.all %}
+        <li>
+            {{ choice.choice_text }}
+        </li>
+        <form method="POST" action="{% url 'vote' q.id %}">
+            {% csrf_token %}
+            <input type="radio" value="{{ choice.id }}" name="choice" id="choice{{ forloop.counter }}"> Vote
+            <button>Submit</button>
+        </form>
+    {% endfor %}
+</ul>
+{% else %}
+    No objects
+{% endif %}
+
+
+
